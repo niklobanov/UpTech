@@ -11,7 +11,17 @@ import SwiftUI
 struct UpTechApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
+    }
+}
+
+struct HomeView: UIViewControllerRepresentable {
+    func makeUIViewController(context: UIViewControllerRepresentableContext<HomeView>) -> HomeViewController {
+        return HomeViewController()
+    }
+
+    func updateUIViewController(_ uiViewController: HomeViewController, context: UIViewControllerRepresentableContext<HomeView>) {
+
     }
 }
