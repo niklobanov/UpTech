@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84357BFC266241D200383D55 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357BFB266241D200383D55 /* API.swift */; };
+		84357BFE26624CAE00383D55 /* BasePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357BFD26624CAE00383D55 /* BasePath.swift */; };
+		84357C0026624DAC00383D55 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357BFF26624DAB00383D55 /* Endpoint.swift */; };
+		84357C022662554300383D55 /* ListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C012662554300383D55 /* ListResponse.swift */; };
+		84357C052662562B00383D55 /* ProductsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C042662562B00383D55 /* ProductsAPI.swift */; };
+		84357C072662571200383D55 /* ProductResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C062662571200383D55 /* ProductResponse.swift */; };
+		84357C092662589500383D55 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C082662589500383D55 /* APIError.swift */; };
+		84357C0C2662624000383D55 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C0B2662624000383D55 /* ApiService.swift */; };
+		84357C0E266262CA00383D55 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C0D266262CA00383D55 /* RequestBuilder.swift */; };
+		84357C1026626A2400383D55 /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C0F26626A2400383D55 /* Method.swift */; };
 		84F094AD26614E440004C054 /* UpTechApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F094AC26614E440004C054 /* UpTechApp.swift */; };
 		84F094AF26614E440004C054 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F094AE26614E440004C054 /* ContentView.swift */; };
 		84F094B126614E470004C054 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F094B026614E470004C054 /* Assets.xcassets */; };
@@ -15,6 +25,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84357BFB266241D200383D55 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		84357BFD26624CAE00383D55 /* BasePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePath.swift; sourceTree = "<group>"; };
+		84357BFF26624DAB00383D55 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		84357C012662554300383D55 /* ListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResponse.swift; sourceTree = "<group>"; };
+		84357C042662562B00383D55 /* ProductsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsAPI.swift; sourceTree = "<group>"; };
+		84357C062662571200383D55 /* ProductResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductResponse.swift; sourceTree = "<group>"; };
+		84357C082662589500383D55 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		84357C0B2662624000383D55 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		84357C0D266262CA00383D55 /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
+		84357C0F26626A2400383D55 /* Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
 		84F094A926614E440004C054 /* UpTech.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UpTech.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F094AC26614E440004C054 /* UpTechApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpTechApp.swift; sourceTree = "<group>"; };
 		84F094AE26614E440004C054 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -52,8 +72,36 @@
 				CDAAE3D287A422A98D04B489 /* Pods-UpTech.debug.xcconfig */,
 				FE599CD018599F407D9B621F /* Pods-UpTech.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		84357C032662562100383D55 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				84357C1126626A2C00383D55 /* Models */,
+				84357BFB266241D200383D55 /* API.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		84357C0A2662623700383D55 /* ApiService */ = {
+			isa = PBXGroup;
+			children = (
+				84357C0B2662624000383D55 /* ApiService.swift */,
+				84357C0D266262CA00383D55 /* RequestBuilder.swift */,
+			);
+			path = ApiService;
+			sourceTree = "<group>";
+		};
+		84357C1126626A2C00383D55 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				84357BFF26624DAB00383D55 /* Endpoint.swift */,
+				84357BFD26624CAE00383D55 /* BasePath.swift */,
+				84357C082662589500383D55 /* APIError.swift */,
+				84357C0F26626A2400383D55 /* Method.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		84F094A026614E440004C054 = {
@@ -77,6 +125,7 @@
 		84F094AB26614E440004C054 /* UpTech */ = {
 			isa = PBXGroup;
 			children = (
+				84F094BB26623FCF0004C054 /* Network */,
 				84F094AC26614E440004C054 /* UpTechApp.swift */,
 				84F094AE26614E440004C054 /* ContentView.swift */,
 				84F094B026614E470004C054 /* Assets.xcassets */,
@@ -92,6 +141,42 @@
 				84F094B326614E470004C054 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		84F094BB26623FCF0004C054 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				84F094BD2662400D0004C054 /* Models */,
+				84F094BC26623FFC0004C054 /* Endpoints */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		84F094BC26623FFC0004C054 /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				84357C0A2662623700383D55 /* ApiService */,
+				84357C032662562100383D55 /* API */,
+				84357C042662562B00383D55 /* ProductsAPI.swift */,
+			);
+			path = Endpoints;
+			sourceTree = "<group>";
+		};
+		84F094BD2662400D0004C054 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				84F094BE2662401B0004C054 /* Response */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		84F094BE2662401B0004C054 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				84357C012662554300383D55 /* ListResponse.swift */,
+				84357C062662571200383D55 /* ProductResponse.swift */,
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,8 +274,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84357C022662554300383D55 /* ListResponse.swift in Sources */,
 				84F094AF26614E440004C054 /* ContentView.swift in Sources */,
+				84357C0C2662624000383D55 /* ApiService.swift in Sources */,
+				84357BFE26624CAE00383D55 /* BasePath.swift in Sources */,
+				84357BFC266241D200383D55 /* API.swift in Sources */,
+				84357C072662571200383D55 /* ProductResponse.swift in Sources */,
 				84F094AD26614E440004C054 /* UpTechApp.swift in Sources */,
+				84357C0E266262CA00383D55 /* RequestBuilder.swift in Sources */,
+				84357C1026626A2400383D55 /* Method.swift in Sources */,
+				84357C052662562B00383D55 /* ProductsAPI.swift in Sources */,
+				84357C0026624DAC00383D55 /* Endpoint.swift in Sources */,
+				84357C092662589500383D55 /* APIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
