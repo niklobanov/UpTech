@@ -39,9 +39,15 @@ final class API<Endpoint: APIService> {
         let urlRequest = request(endpoint: endpoint)
         return URLSession.shared.dataTaskPublisher(for: urlRequest)
             .mapError { error in APIError.requestRejected(error) }
-            .map { $0.data }
+            .map { data in
+                print(String(data: data.data, encoding: .utf8))
+                return data.data
+            }
             .decode(type: T.self, decoder: self.jsonDecoder)
-            .mapError { _ in APIError.decodeFailed }
+            .mapError { _ in
+                print("decode error")
+                return APIError.decodeFailed
+            }
             .eraseToAnyPublisher()
     }
 }

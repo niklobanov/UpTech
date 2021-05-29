@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,14 @@
 		84357C0C2662624000383D55 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C0B2662624000383D55 /* ApiService.swift */; };
 		84357C0E266262CA00383D55 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C0D266262CA00383D55 /* RequestBuilder.swift */; };
 		84357C1026626A2400383D55 /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C0F26626A2400383D55 /* Method.swift */; };
+		84357C1526626BDC00383D55 /* ProdcutsSearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C1426626BDC00383D55 /* ProdcutsSearchState.swift */; };
+		84357C172662978F00383D55 /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C162662978F00383D55 /* ProductsViewController.swift */; };
+		84357C1A266297BA00383D55 /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C19266297BA00383D55 /* ProductTableViewCell.swift */; };
+		84357C1D266297E800383D55 /* UITableView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C1C266297E800383D55 /* UITableView + Extension.swift */; };
+		84357C1F2662A62500383D55 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C1E2662A62500383D55 /* UIColor+Hex.swift */; };
+		84357C232662AB5900383D55 /* ProductsSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C222662AB5900383D55 /* ProductsSearchViewModel.swift */; };
+		84357C252662AE2500383D55 /* Schelduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C242662AE2500383D55 /* Schelduler.swift */; };
+		84357C272662B1B700383D55 /* Publishers + Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84357C262662B1B700383D55 /* Publishers + Utils.swift */; };
 		84F094AD26614E440004C054 /* UpTechApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F094AC26614E440004C054 /* UpTechApp.swift */; };
 		84F094AF26614E440004C054 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F094AE26614E440004C054 /* ContentView.swift */; };
 		84F094B126614E470004C054 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F094B026614E470004C054 /* Assets.xcassets */; };
@@ -35,6 +43,14 @@
 		84357C0B2662624000383D55 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		84357C0D266262CA00383D55 /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
 		84357C0F26626A2400383D55 /* Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
+		84357C1426626BDC00383D55 /* ProdcutsSearchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdcutsSearchState.swift; sourceTree = "<group>"; };
+		84357C162662978F00383D55 /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
+		84357C19266297BA00383D55 /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
+		84357C1C266297E800383D55 /* UITableView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView + Extension.swift"; sourceTree = "<group>"; };
+		84357C1E2662A62500383D55 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		84357C222662AB5900383D55 /* ProductsSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsSearchViewModel.swift; sourceTree = "<group>"; };
+		84357C242662AE2500383D55 /* Schelduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schelduler.swift; sourceTree = "<group>"; };
+		84357C262662B1B700383D55 /* Publishers + Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers + Utils.swift"; sourceTree = "<group>"; };
 		84F094A926614E440004C054 /* UpTech.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UpTech.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F094AC26614E440004C054 /* UpTechApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpTechApp.swift; sourceTree = "<group>"; };
 		84F094AE26614E440004C054 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,6 +120,44 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		84357C1226626BC400383D55 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				84357C1326626BCF00383D55 /* Search */,
+				84357C222662AB5900383D55 /* ProductsSearchViewModel.swift */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		84357C1326626BCF00383D55 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				84357C18266297B100383D55 /* View */,
+				84357C1426626BDC00383D55 /* ProdcutsSearchState.swift */,
+				84357C162662978F00383D55 /* ProductsViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		84357C18266297B100383D55 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84357C19266297BA00383D55 /* ProductTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84357C1B266297C100383D55 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				84357C1C266297E800383D55 /* UITableView + Extension.swift */,
+				84357C1E2662A62500383D55 /* UIColor+Hex.swift */,
+				84357C242662AE2500383D55 /* Schelduler.swift */,
+				84357C262662B1B700383D55 /* Publishers + Utils.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		84F094A026614E440004C054 = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +179,8 @@
 		84F094AB26614E440004C054 /* UpTech */ = {
 			isa = PBXGroup;
 			children = (
+				84357C1B266297C100383D55 /* Common */,
+				84357C1226626BC400383D55 /* Modules */,
 				84F094BB26623FCF0004C054 /* Network */,
 				84F094AC26614E440004C054 /* UpTechApp.swift */,
 				84F094AE26614E440004C054 /* ContentView.swift */,
@@ -190,6 +246,7 @@
 				84F094A526614E440004C054 /* Sources */,
 				84F094A626614E440004C054 /* Frameworks */,
 				84F094A726614E440004C054 /* Resources */,
+				039707707DA5F7F09BA64277 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -245,6 +302,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		039707707DA5F7F09BA64277 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UpTech/Pods-UpTech-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UpTech/Pods-UpTech-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UpTech/Pods-UpTech-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7E9037F38F08BF1E258A9EAB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -275,12 +349,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				84357C022662554300383D55 /* ListResponse.swift in Sources */,
+				84357C1D266297E800383D55 /* UITableView + Extension.swift in Sources */,
 				84F094AF26614E440004C054 /* ContentView.swift in Sources */,
+				84357C1A266297BA00383D55 /* ProductTableViewCell.swift in Sources */,
+				84357C272662B1B700383D55 /* Publishers + Utils.swift in Sources */,
+				84357C1F2662A62500383D55 /* UIColor+Hex.swift in Sources */,
+				84357C172662978F00383D55 /* ProductsViewController.swift in Sources */,
 				84357C0C2662624000383D55 /* ApiService.swift in Sources */,
+				84357C232662AB5900383D55 /* ProductsSearchViewModel.swift in Sources */,
+				84357C252662AE2500383D55 /* Schelduler.swift in Sources */,
 				84357BFE26624CAE00383D55 /* BasePath.swift in Sources */,
 				84357BFC266241D200383D55 /* API.swift in Sources */,
 				84357C072662571200383D55 /* ProductResponse.swift in Sources */,
 				84F094AD26614E440004C054 /* UpTechApp.swift in Sources */,
+				84357C1526626BDC00383D55 /* ProdcutsSearchState.swift in Sources */,
 				84357C0E266262CA00383D55 /* RequestBuilder.swift in Sources */,
 				84357C1026626A2400383D55 /* Method.swift in Sources */,
 				84357C052662562B00383D55 /* ProductsAPI.swift in Sources */,
