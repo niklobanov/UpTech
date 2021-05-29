@@ -22,7 +22,7 @@ final class HomeViewController: UIViewController {
 
     private var blockWidth: CGFloat {
         let screenWidth = UIScreen.main.bounds.width
-        let insets: CGFloat = 20 * 2 + 6
+        let insets: CGFloat = 14 * 2 + 6
         return (screenWidth - insets) / 2
     }
 
@@ -37,31 +37,31 @@ final class HomeViewController: UIViewController {
 
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().inset(20)
+            make.top.left.equalToSuperview().inset(14)
         }
 
         allergyView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.width.height.equalTo(blockWidth)
-            make.leading.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().inset(14)
         }
 
         covidView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.width.height.equalTo(blockWidth)
-            make.trailing.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(14)
         }
 
         diabetesView.snp.makeConstraints { make in
             make.top.equalTo(allergyView.snp.bottom).offset(6)
             make.width.height.equalTo(blockWidth)
-            make.leading.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().inset(14)
         }
 
         efficiencyView.snp.makeConstraints { make in
             make.top.equalTo(allergyView.snp.bottom).offset(6)
             make.width.height.equalTo(blockWidth)
-            make.trailing.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(14)
         }
     }
 }
