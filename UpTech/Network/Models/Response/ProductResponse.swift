@@ -7,16 +7,26 @@
 
 import Foundation
 
-struct ProductResponse: Codable {
-    let productID: Int
-    let mnnID: String
-    let mnnName: String
-    let mnnCode: String
+struct ProductResponse: Codable, Hashable {
+    let sberProductId: Int
+    let name: String
+    let country: String
+    let dosage: String
+    let drugForm: String
+    let formName: String
+    let isRecipe: Bool
+    let manufacturer: String
+    let packing: String
 
     enum CodingKeys: String, CodingKey {
-        case productID = "PRODUCT_ID"
-        case mnnID = "MNN_ID"
-        case mnnName = "MNN_NAME"
-        case mnnCode = "MNN_CODE"
+        case sberProductId = "sber_product_id"
+        case name
+        case country
+        case dosage
+        case drugForm = "drug_form"
+        case formName = "form_name"
+        case isRecipe = "is_recipe"
+        case manufacturer
+        case packing
     }
 }

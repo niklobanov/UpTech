@@ -9,17 +9,16 @@ import Foundation
 import Combine
 
 enum ProductsAPIService {
-    case getProducts
-    case search(queue: String)
+    case getProducts(queue: String)
 }
 
 extension ProductsAPIService: APIService {
     var baseURL: String {
-        ""
+        "http://uptech-stage.herokuapp.com/api/v1"
     }
 
     var path: String {
-        ""
+        "/products/search/"
     }
 
     var method: Method {
@@ -32,7 +31,9 @@ extension ProductsAPIService: APIService {
 
     var parameters: [String : Any] {
         switch self {
-        case .search(let queue):
+        case .getProducts(let queue):
+            return [:]
+
             return ["search": queue]
         default:
             return [:]
@@ -44,7 +45,7 @@ final class ProductsAPI {
     static let shard = ProductsAPI()
     private let productsAPI = API<ProductsAPIService>()
 
-    func getProducts() -> AnyPublisher<ListResponse<ProductResponse>, APIError> {
-        self.productsAPI.call(endpoint: .getProducts)
+    func getProducts(queue: String) -> AnyPublisher<ListResponse<ProductResponse>, APIError> {
+        self.productsAPI.call(endpoint: .getProducts(queue: queue))
     }
 }
