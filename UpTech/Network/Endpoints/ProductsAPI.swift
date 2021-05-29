@@ -32,9 +32,7 @@ extension ProductsAPIService: APIService {
     var parameters: [String : Any] {
         switch self {
         case .getProducts(let queue):
-            return [:]
-
-            return ["search": queue]
+            return ["name": "Далацин"]
         default:
             return [:]
         }

@@ -27,7 +27,6 @@ final class ProductsSearchViewModel {
     private var cancellables: [AnyCancellable] = []
     private let productsAPI = ProductsAPI.shard
 
-
     func testRequest() {
         productsAPI.getProducts(queue: "").map { response in
             print(response.results)

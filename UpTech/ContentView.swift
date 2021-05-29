@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    let viewModel = ProductsSearchViewModel()
+
     var body: some View {
         Text("Hello, world!")
             .padding()
+            .onAppear {
+                viewModel.testRequest()
+            }
     }
 }
 
@@ -18,4 +23,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
+
+
 }
