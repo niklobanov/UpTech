@@ -18,14 +18,18 @@ final class API<Endpoint: APIService> {
 
     private func request(endpoint: Endpoint) -> URLRequest {
         let path = requestBuilder.formUrlPath(from: endpoint)
-        guard let url = URL(string: path) else {
+
+        var urlCompontents = URLComponents(string: path)
+        urlCompontents?.queryItems = endpoint.parameters.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
+
+        guard let url = urlCompontents?.url else {
             preconditionFailure("bad url")
         }
 
         var request = URLRequest(url: url)
+
         request.httpMethod = endpoint.method.rawValue
         request.allHTTPHeaderFields = requestBuilder.formHeaders(from: endpoint)
-        endpoint.parameters.forEach { request.addValue("\($0.value)", forHTTPHeaderField: $0.key) }
 
         print("request created: path = \(path)\n\tmethod = \(endpoint.method)\n\tparams = \(String(describing: endpoint.parameters))")
         return request
