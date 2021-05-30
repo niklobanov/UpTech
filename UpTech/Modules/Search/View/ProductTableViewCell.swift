@@ -95,13 +95,19 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
         titleLabel.text = response.name
         countryLabel.text = response.country
         let randomPrice = Int.random(in: 100...1000)
-        if let price = Int(response.price) {
-            priceLabel.text = "\(price) ₽"
-        } else {
-            priceLabel.text = "\(randomPrice) ₽"
-        }
+        let price = Int(Double(response.price) ?? Double(randomPrice))
+        priceLabel.text = "\(price) ₽"
+
         if let count = response.analogueIDs?.count {
-            let randomAnalogue = Int.random(in: 100...randomPrice)
+            var randomAnalogue = Int.random(in: 100...randomPrice)
+
+            if let analogues = response.analogues, !analogues.isEmpty {
+
+                if let minPrice = analogues.map({ Double($0.price) ?? 0 }).min() {
+                    randomAnalogue = Int(minPrice)
+                }
+            }
+
             let analogeTitle = count == 1 ? "аналог" : "аналога"
             analogueLabel.text = "\(count) \(analogeTitle) от \(randomAnalogue) ₽"
             analogueLabel.isHidden = count == 0
