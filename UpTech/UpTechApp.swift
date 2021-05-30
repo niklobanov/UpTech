@@ -12,7 +12,7 @@ struct UpTechApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                HomeView()
+                DetailView()
             }
         }
     }

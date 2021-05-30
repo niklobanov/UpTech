@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B2B32D52663814200551EA1 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2B32D42663814200551EA1 /* RemoteImage.swift */; };
 		1B9931A42662E97300E487D3 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9931A32662E97300E487D3 /* DetailView.swift */; };
 		1B9931A62662F76700E487D3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9931A52662F76700E487D3 /* Colors.swift */; };
 		8414B52A266313A500D873A2 /* ProductsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414B529266313A500D873A2 /* ProductsFlow.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B2B32D42663814200551EA1 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		1B9931A32662E97300E487D3 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		1B9931A52662F76700E487D3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8414B529266313A500D873A2 /* ProductsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsFlow.swift; sourceTree = "<group>"; };
@@ -104,6 +106,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B2B32D32663812F00551EA1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1B2B32D42663814200551EA1 /* RemoteImage.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3D22D7D1ED897FD73E76570B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				8414B52F26637C1A00D873A2 /* Fonts */,
+				1B2B32D32663812F00551EA1 /* Views */,
 				84357C1B266297C100383D55 /* Common */,
 				84357C1226626BC400383D55 /* Modules */,
 				84F094BB26623FCF0004C054 /* Network */,
@@ -423,6 +434,7 @@
 				84357C272662B1B700383D55 /* Publishers + Utils.swift in Sources */,
 				843BF5B52662D2F100247FF3 /* HomeViewController.swift in Sources */,
 				8414B52E2663786900D873A2 /* UINavigation+Extension.swift in Sources */,
+				1B2B32D52663814200551EA1 /* RemoteImage.swift in Sources */,
 				1B9931A42662E97300E487D3 /* DetailView.swift in Sources */,
 				84357C1F2662A62500383D55 /* UIColor+Hex.swift in Sources */,
 				84357C172662978F00383D55 /* ProductsViewController.swift in Sources */,

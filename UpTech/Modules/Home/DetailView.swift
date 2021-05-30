@@ -7,36 +7,85 @@
 
 import SwiftUI
 
+enum ProductBadge {
+    case effective
+    case cheapest
+    case safe
+    case none
+
+    init(isEffective: Bool, isCheapest: Bool, isSafe: Bool) {
+        switch (isEffective, isCheapest, isSafe) {
+        case (true, _, _):
+            self = .effective
+        case (_, true, _):
+            self = .cheapest
+        case (_, _, true):
+            self = .safe
+        default:
+            self = .none
+        }
+    }
+
+    var directTitle: String? {
+        switch self {
+        case .effective:
+            return "Эффективный"
+        case .cheapest:
+            return "Самый дешевый"
+        case .safe:
+            return "Безопасный"
+        default:
+            return nil
+        }
+    }
+
+    var analogueTitle: String? {
+        switch self {
+        case .effective:
+            return "Эффективнее"
+        case .cheapest:
+            return "Дешевле"
+        case .safe:
+            return "Безопаснее"
+        default:
+            return nil
+        }
+    }
+}
+
+struct Product {
+    let name: String
+    let badge: ProductBadge
+}
+
 struct DetailView: View {
     let jsonURL = "https://cf.geekdo-images.com/thumb/img/sD_qvrzIbvfobJj0ZDAaq-TnQPs=/fit-in/200x150/pic2649952.jpg"
 
     var body: some View {
         VStack(alignment: .leading) {
             ZStack(alignment: .topLeading) {
-                RemoteImage(url: jsonURL)
-                    .aspectRatio(contentMode: .fit)
-                ZStack {
-                    ButtonBackgroundShape(cornerRadius: 14, style: .circular)
-                        .fill(Color.purpleColor)
-                        .frame(height: 40)
-
-                    Text("Дешевле")
-                        .font(.system(.headline, design: .rounded))
-                        .foregroundColor(.white)
-                        .padding([.leading, .trailing], 32)
-                        .padding([.top, .bottom], 2)
-                }
-                .fixedSize(horizontal: true, vertical: false)
+                RemoteImage(
+                    url: jsonURL
+                )
+                .aspectRatio(contentMode: .fit)
+                BadgeView(
+                    text: "Эффективный",
+                    height: 40,
+                    padding: 32
+                )
                 .offset(y: 40)
             }
 
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text("Мелаксен, таблетки 3 мг, 24 шт.")
+                    .fontWeight(.bold)
 
                 HStack {
                     StarsView(starsFilled: 5)
 
                     Text("35 отзывов")
+                        .foregroundColor(.gray)
+                        .font(.system(.caption2))
                 }
             }
             .offset(x: 16)
@@ -48,54 +97,12 @@ struct DetailView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: [.init(.fixed(269), spacing: 8)]) {
                     ForEach(1..<10) { element in
-                        ZStack {
-                            Rectangle()
-                                .fill(Color.white)
-                                .cornerRadius(16)
-                                .shadow(radius: 2)
-
-                            VStack {
-                                ZStack(alignment: .topLeading) {
-                                    RemoteImage(url: jsonURL)
-                                        .aspectRatio(contentMode: .fit)
-                                    ZStack {
-                                        ButtonBackgroundShape(cornerRadius: 14, style: .circular)
-                                            .fill(Color.purpleColor)
-                                            .frame(height: 24)
-
-                                        Text("Дешевле")
-                                            .font(.system(.footnote, design: .rounded))
-                                            .foregroundColor(.white)
-                                            .padding([.leading, .trailing], 16)
-                                            .padding([.top, .bottom], 2)
-                                    }
-                                    .fixedSize(horizontal: true, vertical: false)
-                                    .offset(y: 20)
-                                }
-
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text("Мирамистин р-р для местн применения 0.01%, флакон с распи")
-                                        .font(.system(.footnote))
-                                        .lineLimit(3)
-                                    StarsView(starsFilled: 3)
-
-                                    HStack {
-                                        Text("245 ₽")
-                                        Spacer()
-                                        Button(
-                                            action: {},
-                                            label: {
-                                                Image("buy")
-                                                    .frame(width: 32, height: 32)
-                                            }
-                                        )
-                                    }
-                                }
-                                .padding(8)
-
-                                Spacer()
-                            }
-                        }
+                        AnalogueView(
+                            imageUrl: jsonURL,
+                            badgeText: "Дешевле",
+                            drugName: "Мирамистин р-р для местн применения 0.01%, флакон с распи",
+                            price: "245 ₽"
+                        )
                     }
                     .frame(width: 169)
                 }
@@ -107,8 +114,75 @@ struct DetailView: View {
     }
 }
 
-struct ButtonBackgroundShape: Shape {
+struct BadgeView: View {
+    let text: String
+    let height: CGFloat
+    let padding: CGFloat
 
+    var body: some View {
+        ZStack {
+            RoundedSpecificCornersRectangle(cornerRadius: 14, style: .circular)
+                .fill(Color.purpleColor)
+                .frame(height: height)
+
+            Text(text)
+                .font(.system(.footnote, design: .rounded))
+                .foregroundColor(.white)
+                .padding([.leading, .trailing], padding)
+                .padding([.top, .bottom], 2)
+        }
+        .fixedSize(horizontal: true, vertical: false)
+    }
+}
+
+struct AnalogueView: View {
+    let imageUrl: String
+    let badgeText: String
+    let drugName: String
+    let starsFilled: Int = 4
+    let price: String
+
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(Color.white)
+                .cornerRadius(16)
+                .shadow(radius: 2)
+
+            VStack {
+                ZStack(alignment: .topLeading) {
+                    RemoteImage(url: imageUrl)
+                        .aspectRatio(contentMode: .fit)
+                    BadgeView(
+                        text: badgeText,
+                        height: 24,
+                        padding: 16
+                    )
+                    .offset(y: 20)
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(drugName)
+                        .font(.system(.footnote))
+                        .lineLimit(3)
+                    StarsView(starsFilled: starsFilled)
+
+                    HStack {
+                        Text(price)
+                        Spacer()
+                        Image("buy")
+                            .frame(width: 32, height: 32)
+                    }
+                }
+                .padding(8)
+
+                Spacer()
+            }
+        }
+    }
+}
+
+struct RoundedSpecificCornersRectangle: Shape {
     var cornerRadius: CGFloat
     var style: RoundedCornerStyle
 
@@ -124,10 +198,6 @@ struct ButtonBackgroundShape: Shape {
 
 struct StarsView: View {
     let starsFilled: Int
-
-    init(starsFilled: Int) {
-        self.starsFilled = starsFilled
-    }
 
     var body: some View {
         HStack(spacing: 4) {
@@ -156,70 +226,6 @@ struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView{
             DetailView()
-        }
-    }
-}
-
-struct RemoteImage: View {
-    private enum LoadState {
-        case loading, success, failure
-    }
-
-    private class Loader: ObservableObject {
-        var data = Data()
-        var state = LoadState.loading
-
-        init(url: String) {
-            guard let parsedURL = URL(string: url) else {
-                fatalError("Invalid URL: \(url)")
-            }
-
-            URLSession.shared.dataTask(with: parsedURL) { data, response, error in
-                if let data = data, data.count > 0 {
-                    self.data = data
-                    self.state = .success
-                } else {
-                    self.state = .failure
-                }
-
-                DispatchQueue.main.async {
-                    self.objectWillChange.send()
-                }
-            }.resume()
-        }
-    }
-
-    @StateObject private var loader: Loader
-    var loading: Image
-    var failure: Image
-
-    var body: some View {
-        selectImage()
-            .resizable()
-    }
-
-    init(
-        url: String,
-        loading: Image = Image(systemName: "photo"),
-        failure: Image = Image(systemName: "multiply.circle")
-    ) {
-        _loader = StateObject(wrappedValue: Loader(url: url))
-        self.loading = loading
-        self.failure = failure
-    }
-
-    private func selectImage() -> Image {
-        switch loader.state {
-        case .loading:
-            return loading
-        case .failure:
-            return failure
-        default:
-            if let image = UIImage(data: loader.data) {
-                return Image(uiImage: image)
-            } else {
-                return failure
-            }
         }
     }
 }
