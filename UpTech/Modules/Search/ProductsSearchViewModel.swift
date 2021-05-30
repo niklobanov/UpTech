@@ -11,7 +11,7 @@ import UIKit
 struct ProductsSearchViewModelInput {
     let appear: AnyPublisher<Void, Never>
     let search: AnyPublisher<String, Never>
-    let selection: AnyPublisher<Int, Never>
+    let selection: AnyPublisher<ProductResponse, Never>
 }
 
 typealias ProductsSearchViewModelOuput = AnyPublisher<ProdcutsSearchState, Never>
@@ -21,18 +21,19 @@ protocol ProductSearchViewModelProtocol {
 }
 
 final class ProductsSearchViewModel: ProductSearchViewModelProtocol {
-    private var cancellables: [AnyCancellable] = []
+    private var cancellables = [AnyCancellable]()
+    private var results = [ProductResponse]()
     private let productsAPI = ProductsAPI.shard
 
     func transform(input: ProductsSearchViewModelInput) -> ProductsSearchViewModelOuput {
         cancellables.forEach { $0.cancel() }
         cancellables.removeAll()
 
-        input.selection
-            .sink(receiveValue: { [weak self] productId in
-                // Переход в детейл
+        let selectionProcessing = input.selection
+            .map({ product -> ProdcutsSearchState in
+                return .openProduct(product)
             })
-            .store(in: &cancellables)
+            .eraseToAnyPublisher()
 
         let searchInput = input.search
             .debounce(for: .milliseconds(300), scheduler: Scheduler.mainScheduler)
@@ -55,6 +56,8 @@ final class ProductsSearchViewModel: ProductSearchViewModelProtocol {
         let emptySearchString: ProductsSearchViewModelOuput = searchInput.filter({ $0.isEmpty }).map({ _ in .idle }).eraseToAnyPublisher()
         let idle: ProductsSearchViewModelOuput = Publishers.Merge(initialState, emptySearchString).eraseToAnyPublisher()
 
-        return Publishers.Merge(idle, movies).removeDuplicates().eraseToAnyPublisher()
+        return Publishers.Merge3(idle, movies, selectionProcessing)
+            .removeDuplicates()
+            .eraseToAnyPublisher()
     }
 }
