@@ -22,7 +22,7 @@ final class CompilationView: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        imageView.layer.cornerRadius = Self.cornerRadius
+        imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
         return imageView
     }()
