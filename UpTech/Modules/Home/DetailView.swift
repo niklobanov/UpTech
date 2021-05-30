@@ -61,19 +61,37 @@ struct Product: Identifiable {
     let analogues: [Int]
 }
 
+extension Product {
+    init(productResponse: ProductResponse) {
+        self.id = productResponse.sberProductId ?? 0
+        self.name = productResponse.name ?? ""
+        self.badge = .init(
+            isEffective: productResponse.isEffective ?? false,
+            isCheapest: productResponse.isCheapest ?? false,
+            isSafe: productResponse.isTrustworthy ?? false
+        )
+        self.imageUrl = productResponse.imageURL
+        self.analogues = productResponse.analogueIDs ?? []
+    }
+}
+
 struct DetailView: View {
     let jsonURL = "https://cf.geekdo-images.com/thumb/img/sD_qvrzIbvfobJj0ZDAaq-TnQPs=/fit-in/200x150/pic2649952.jpg"
 
     let product: Product
-    var analogues = [Product]()
+    var analogues: [Product]
 
     var body: some View {
         VStack(alignment: .leading) {
             ZStack(alignment: .topLeading) {
-                RemoteImage(
-                    url: product.imageUrl ?? jsonURL
-                )
-                .aspectRatio(contentMode: .fit)
+                HStack {
+                    Spacer()
+                    RemoteImage(
+                        url: product.imageUrl ?? jsonURL
+                    )
+                    .aspectRatio(contentMode: .fit)
+                    Spacer()
+                }
 
                 if product.badge.directTitle != nil {
                     BadgeView(
@@ -90,7 +108,7 @@ struct DetailView: View {
                     .fontWeight(.bold)
 
                 HStack {
-                    StarsView(starsFilled: 5)
+                    StarsView(starsFilled: Int.random(in: 1...5))
 
                     Text("\(Int.random(in: 3..<35)) отзывов")
                         .foregroundColor(.gray)
@@ -239,16 +257,23 @@ struct StarsView: View {
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView{
-            DetailView(
-                product: .init(
+        DetailView(
+            product: .init(
+                id: 23,
+                name: "Мелаксен, таблетки 3мг, 24 шт.",
+                badge: .cheapest,
+                imageUrl: nil,
+                analogues: []
+            ),
+            analogues: [
+                .init(
                     id: 23,
                     name: "Мелаксен, таблетки 3мг, 24 шт.",
                     badge: .cheapest,
                     imageUrl: nil,
                     analogues: []
                 )
-            )
-        }
+            ]
+        )
     }
 }

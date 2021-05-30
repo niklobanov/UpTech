@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import SwiftUI
 
 enum Section: CaseIterable {
     case products
@@ -16,7 +17,7 @@ final class ProductsViewController: UIViewController {
     private var cancellables: [AnyCancellable] = []
 
     private let appear = PassthroughSubject<Void, Never>()
-    private let selection = PassthroughSubject<Int, Never>()
+    private let selection = PassthroughSubject<ProductResponse, Never>()
     private let search = PassthroughSubject<String, Never>()
     private let viewModel: ProductSearchViewModelProtocol
 
@@ -111,9 +112,12 @@ final class ProductsViewController: UIViewController {
     private func bind(to viewModel: ProductSearchViewModelProtocol) {
         cancellables.forEach { $0.cancel() }
         cancellables.removeAll()
-        let input = ProductsSearchViewModelInput(appear: appear.eraseToAnyPublisher(),
-                                                 search: search.eraseToAnyPublisher(),
-                                                 selection: selection.eraseToAnyPublisher())
+
+        let input = ProductsSearchViewModelInput(
+            appear: appear.eraseToAnyPublisher(),
+            search: search.eraseToAnyPublisher(),
+            selection: selection.eraseToAnyPublisher()
+        )
 
         let output = viewModel.transform(input: input)
 
@@ -154,7 +158,18 @@ final class ProductsViewController: UIViewController {
             tableView.isHidden = false
             idleView.isHidden = true
             update(with: movies, animate: true)
+        case .openProduct(let product):
+            open(product)
         }
+    }
+
+    func open(_ productResponse: ProductResponse) {
+        let detailView = DetailView(
+            product: Product(productResponse: productResponse),
+            analogues: productResponse.analogues?.map(Product.init) ?? []
+        )
+        let vc = UIHostingController(rootView: detailView)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -198,7 +213,7 @@ extension ProductsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let snapshot = dataSource.snapshot()
-        selection.send(snapshot.itemIdentifiers[indexPath.row].sberProductId ?? 0)
+        selection.send(snapshot.itemIdentifiers[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
     }
 

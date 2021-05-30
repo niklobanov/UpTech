@@ -13,6 +13,7 @@ enum ProdcutsSearchState {
     case success([ProductResponse])
     case loading
     case failure(Error)
+    case openProduct(ProductResponse)
 }
 
 extension ProdcutsSearchState: Equatable {
