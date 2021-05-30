@@ -12,7 +12,7 @@ final class CompilationView: UIView {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.uptechFont(ofSize: 12)
         label.numberOfLines = 0
         label.textColor = .black
         return label
