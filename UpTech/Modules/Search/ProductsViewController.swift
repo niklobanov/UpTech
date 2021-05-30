@@ -107,8 +107,8 @@ final class ProductsViewController: UIViewController {
         cancellables.forEach { $0.cancel() }
         cancellables.removeAll()
         let input = ProductsSearchViewModelInput(appear: appear.eraseToAnyPublisher(),
-                                               search: search.eraseToAnyPublisher(),
-                                               selection: selection.eraseToAnyPublisher())
+                                                 search: search.eraseToAnyPublisher(),
+                                                 selection: selection.eraseToAnyPublisher())
 
         let output = viewModel.transform(input: input)
 

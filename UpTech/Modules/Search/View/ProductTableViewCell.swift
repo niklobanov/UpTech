@@ -47,6 +47,18 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
         return label
     }()
 
+    private lazy var bageButton: UIButton = {
+        let button = UIButton()
+        button.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        button.layer.cornerRadius = 14
+        button.backgroundColor = UIColor(red: 0.48, green: 0.45, blue: 0.90, alpha: 1)
+        button.titleLabel?.font = UIFont.uptechFont(ofSize: 12)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("Дешёвый", for: .normal)
+        button.contentEdgeInsets = .init(top: 8, left: 10, bottom: 8, right: 10)
+        return button
+    }()
+
     private lazy var analogueLabel: MarginsLabel = {
         let label = MarginsLabel()
         label.textAlignment = .center
@@ -90,10 +102,12 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
         }
         if let count = response.analogueIDs?.count {
             let randomAnalogue = Int.random(in: 100...randomPrice)
-            analogueLabel.text = "\(count) аналога от \(randomAnalogue) ₽"
+            let analogeTitle = count == 1 ? "аналог" : "аналога"
+            analogueLabel.text = "\(count) \(analogeTitle) от \(randomAnalogue) ₽"
             analogueLabel.isHidden = count == 0
         }
 
+        setupBadge(product: response)
         if let path = response.imageURL, let url = URL(string: path) {
             productImageView.load(url: url)
         } else {
@@ -101,8 +115,32 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
         }
     }
 
+    func setupBadge(product: ProductResponse) {
+        guard
+            let effective = product.isEffective,
+            let cheap = product.isCheapest,
+            let safe = product.isTrustworthy
+        else {
+            bageButton.isHidden = true
+            return
+        }
+
+        let badge = ProductBadge(isEffective: effective, isCheapest: cheap, isSafe: safe)
+        bageButton.isHidden = badge == .none
+        bageButton.setTitle(badge.analogueTitle, for: .normal)
+    }
+
     private func setupLayout() {
-        [productImageView, titleLabel, countryLabel, inStockLabel, priceLabel, analogueLabel, bottomSeperatorView].forEach(contentView.addSubview)
+        [
+            productImageView,
+            titleLabel,
+            countryLabel,
+            inStockLabel,
+            priceLabel,
+            analogueLabel,
+            bottomSeperatorView,
+            bageButton
+        ].forEach(contentView.addSubview)
 
         productImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
@@ -132,6 +170,11 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
             make.top.equalTo(inStockLabel.snp.bottom).offset(5)
             make.leading.equalTo(productImageView.snp.trailing).offset(20)
             make.trailing.equalToSuperview().inset(20)
+        }
+
+        bageButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(30)
+            make.leading.equalToSuperview()
         }
 
         analogueLabel.snp.makeConstraints { make in
