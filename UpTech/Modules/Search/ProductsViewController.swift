@@ -44,7 +44,7 @@ final class ProductsViewController: UIViewController {
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.tintColor = UIColor(hex: "#d2a071")
+        searchController.searchBar.tintColor = UIColor(red: 0.48, green: 0.45, blue: 0.90, alpha: 1)
         searchController.searchBar.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
         return searchController
@@ -106,7 +106,7 @@ final class ProductsViewController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.removeBackTitle()
-        navigationController?.navigationBar.tintColor = UIColor(hex: "#d2a071")
+        navigationController?.navigationBar.tintColor = UIColor(red: 0.48, green: 0.45, blue: 0.90, alpha: 1)
     }
 
     private func bind(to viewModel: ProductSearchViewModelProtocol) {
