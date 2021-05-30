@@ -24,12 +24,18 @@ final class ProductsViewController: UIViewController {
 
     private lazy var activityIndicator = UIActivityIndicatorView(style: .medium)
 
+    private lazy var idleView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "empty_icon")
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorStyle = .none
         view.tableFooterView = UIView()
         view.rowHeight = UITableView.automaticDimension
-
         view.registerClass(cellClass: ProductTableViewCell.self)
         return view
     }()
@@ -37,8 +43,9 @@ final class ProductsViewController: UIViewController {
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.tintColor = .label
+        searchController.searchBar.tintColor = .red
         searchController.searchBar.delegate = self
+        searchController.hidesNavigationBarDuringPresentation = false
         return searchController
     }()
 
@@ -52,17 +59,31 @@ final class ProductsViewController: UIViewController {
         fatalError("Not supported!")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.removeBackTitle()
+    }
+
     override func loadView() {
         let view = UIView()
         view.backgroundColor = .white
-        [tableView, activityIndicator].forEach(view.addSubview)
+        [tableView, activityIndicator, idleView].forEach(view.addSubview)
 
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
+            make.leading.trailing.bottom.equalToSuperview()
         }
 
         activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
+        }
+
+        idleView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         self.view = view
     }
@@ -71,12 +92,10 @@ final class ProductsViewController: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = dataSource
         tableView.delegate = self
-        definesPresentationContext = true
-
         bind(to: viewModel)
-        navigationItem.searchController = self.searchController
-        searchController.isActive = true
 
+        self.navigationItem.titleView = self.searchController.searchBar;
+        searchController.isActive = true
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -103,22 +122,32 @@ final class ProductsViewController: UIViewController {
         case .idle:
             activityIndicator.stopAnimating()
             activityIndicator.isHidden = true
+            tableView.isHidden = false
+            idleView.isHidden = false
             update(with: [], animate: true)
         case .loading:
             activityIndicator.startAnimating()
             activityIndicator.isHidden = false
             update(with: [], animate: true)
+            tableView.isHidden = true
+            idleView.isHidden = true
         case .noResults:
             activityIndicator.stopAnimating()
             activityIndicator.isHidden = true
             update(with: [], animate: true)
+            idleView.isHidden = true
+            tableView.isHidden = false
         case .failure:
             activityIndicator.stopAnimating()
             activityIndicator.isHidden = true
             update(with: [], animate: true)
+            idleView.isHidden = true
+            tableView.isHidden = false
         case .success(let movies):
             activityIndicator.stopAnimating()
             activityIndicator.isHidden = true
+            tableView.isHidden = false
+            idleView.isHidden = true
             update(with: movies, animate: true)
         }
     }
@@ -128,23 +157,22 @@ fileprivate extension ProductsViewController {
     func makeDataSource() -> UITableViewDiffableDataSource<Section, ProductResponse> {
         return UITableViewDiffableDataSource(
             tableView: tableView,
-            cellProvider: {  tableView, indexPath, movieViewModel in
+            cellProvider: {  tableView, indexPath, response in
                 guard let cell = tableView.dequeueReusableCell(withClass: ProductTableViewCell.self) else {
                     assertionFailure("Failed to dequeue \(ProductTableViewCell.self)!")
                     return UITableViewCell()
                 }
-                cell.setup()
+                cell.setup(response: response)
                 return cell
             }
         )
     }
 
-    func update(with movies: [ProductResponse], animate: Bool = true) {
-        print(movies)
+    func update(with products: [ProductResponse], animate: Bool = true) {
         DispatchQueue.main.async {
             var snapshot = NSDiffableDataSourceSnapshot<Section, ProductResponse>()
             snapshot.appendSections(Section.allCases)
-            snapshot.appendItems(movies, toSection: .products)
+            snapshot.appendItems(products, toSection: .products)
             self.dataSource.apply(snapshot, animatingDifferences: animate)
         }
     }
