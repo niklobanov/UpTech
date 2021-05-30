@@ -35,14 +35,16 @@ final class CompilationView: UIView {
         return view
     }()
 
+    private let tapAction: (() -> Void)?
 
-    init(type: Compilation) {
+    init(type: Compilation, tapAction: (() -> Void)? = nil) {
+        self.tapAction = tapAction
         super.init(frame: .zero)
 
         titleLabel.text = type.title
         imageView.image = type.image
         setupLayout(isHighlightedBorder: type.isHighlightedBorder)
-        setupView(isHighlightedBorder: type.isHighlightedBorder)
+        setupView()
     }
 
     @available(*, unavailable)
@@ -50,32 +52,13 @@ final class CompilationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupView(isHighlightedBorder: Bool) {
+    private func setupView() {
         self.backgroundColor = .white
         self.applyShadow(with: Shadows.standardWideShadow)
         layer.cornerRadius = Self.cornerRadius
-    }
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onViewTap)))
 
-    func hexStringToUIColor(hex:String) -> UIColor {
-        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
-        if (cString.hasPrefix("#")) {
-            cString.remove(at: cString.startIndex)
-        }
-
-        if ((cString.count) != 6) {
-            return UIColor.gray
-        }
-
-        var rgbValue:UInt64 = 0
-        Scanner(string: cString).scanHexInt64(&rgbValue)
-
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
     }
 
     private func setupLayout(isHighlightedBorder: Bool) {
@@ -98,5 +81,10 @@ final class CompilationView: UIView {
             make.centerY.equalTo(imageView.snp.bottom).offset(17)
             make.leading.trailing.equalToSuperview().inset(16)
         }
+    }
+
+    @objc
+    private func onViewTap() {
+        tapAction?()
     }
 }

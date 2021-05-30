@@ -11,7 +11,9 @@ final class HomeViewController: UIViewController {
     private lazy var allergyView = CompilationView(type: .allergy)
     private lazy var covidView = CompilationView(type: .covid)
     private lazy var diabetesView = CompilationView(type: .diabetes)
-    private lazy var efficiencyView = CompilationView(type: .efficiency)
+    private lazy var efficiencyView = CompilationView(type: .efficiency) { [weak self] in
+        self?.navigationController?.pushViewController(ProductsFlow.makeProductsList(), animated: true)
+    }
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()

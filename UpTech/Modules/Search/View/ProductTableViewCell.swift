@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class ProductTableViewCell: UITableViewCell, Reusable {
+final class ProductTableViewCell: UITableViewCell, ReusableView {
     private lazy var productImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -61,10 +61,10 @@ final class ProductTableViewCell: UITableViewCell, Reusable {
 
 
     private func setupLayout() {
-        [productImageView, titleLabel, countryLabel, inStockLabel, priceLabel].forEach(addSubview)
+        [productImageView, titleLabel, countryLabel, inStockLabel, priceLabel].forEach(contentView.addSubview)
 
         productImageView.snp.makeConstraints { make in
-            make.leading.trailing.top.equalToSuperview().inset(20)
+            make.leading.trailing.bottom.top.equalToSuperview().inset(20)
             make.size.equalTo(CGSize(width: 120, height: 100))
         }
 

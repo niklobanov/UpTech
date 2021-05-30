@@ -8,9 +8,22 @@
 import Foundation
 
 enum ProdcutsSearchState {
-    case noResult
+    case noResults
     case idle
-    case succes([ProductResponse])
+    case success([ProductResponse])
     case loading
     case failure(Error)
+}
+
+extension ProdcutsSearchState: Equatable {
+    static func == (lhs: ProdcutsSearchState, rhs: ProdcutsSearchState) -> Bool {
+        switch (lhs, rhs) {
+        case (.idle, .idle): return true
+        case (.loading, .loading): return true
+        case (.success(let lhsResponse), .success(let rhsResponse)): return lhsResponse == rhsResponse
+        case (.noResults, .noResults): return true
+        case (.failure, .failure): return true
+        default: return false
+        }
+    }
 }

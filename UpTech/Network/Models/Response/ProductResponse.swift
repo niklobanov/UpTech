@@ -8,15 +8,15 @@
 import Foundation
 
 struct ProductResponse: Codable, Hashable {
-    let sberProductId: Int
-    let name: String
-    let country: String
-    let dosage: String
-    let drugForm: String
-    let formName: String
-    let isRecipe: Bool
-    let manufacturer: String
-    let packing: String
+    let sberProductId: Int?
+    let name: String?
+    let country: String?
+    let dosage: String?
+    let drugForm: String?
+    let formName: String?
+    let isRecipe: Bool?
+    let manufacturer: String?
+    let packing: String?
 
     enum CodingKeys: String, CodingKey {
         case sberProductId = "sber_product_id"

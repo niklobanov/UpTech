@@ -43,7 +43,12 @@ final class ProductsAPI {
     static let shard = ProductsAPI()
     private let productsAPI = API<ProductsAPIService>()
 
-    func getProducts(queue: String) -> AnyPublisher<ListResponse<ProductResponse>, APIError> {
-        self.productsAPI.call(endpoint: .getProducts(queue: queue))
+    func getProducts(queue: String) -> AnyPublisher<Result<ListResponse<ProductResponse>, APIError>, Never> {
+       return self.productsAPI.call(endpoint: .getProducts(queue: queue))
+        .map { .success($0) }
+        .catch { error -> AnyPublisher<Result<ListResponse<ProductResponse>, APIError>, Never> in .just(.failure(error)) }
+        .subscribe(on: Scheduler.backgroundWorkScheduler)
+        .receive(on: Scheduler.mainScheduler)
+        .eraseToAnyPublisher()
     }
 }
