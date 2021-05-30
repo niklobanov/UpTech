@@ -53,62 +53,74 @@ enum ProductBadge {
     }
 }
 
-struct Product {
+struct Product: Identifiable {
+    let id: Int
     let name: String
     let badge: ProductBadge
+    let imageUrl: String?
+    let analogues: [Int]
 }
 
 struct DetailView: View {
     let jsonURL = "https://cf.geekdo-images.com/thumb/img/sD_qvrzIbvfobJj0ZDAaq-TnQPs=/fit-in/200x150/pic2649952.jpg"
 
+    let product: Product
+    var analogues = [Product]()
+
     var body: some View {
         VStack(alignment: .leading) {
             ZStack(alignment: .topLeading) {
                 RemoteImage(
-                    url: jsonURL
+                    url: product.imageUrl ?? jsonURL
                 )
                 .aspectRatio(contentMode: .fit)
-                BadgeView(
-                    text: "Эффективный",
-                    height: 40,
-                    padding: 32
-                )
-                .offset(y: 40)
+
+                if product.badge.directTitle != nil {
+                    BadgeView(
+                        text: product.badge.directTitle!,
+                        height: 40,
+                        padding: 32
+                    )
+                    .offset(y: 40)
+                }
             }
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("Мелаксен, таблетки 3 мг, 24 шт.")
+                Text(product.name)
                     .fontWeight(.bold)
 
                 HStack {
                     StarsView(starsFilled: 5)
 
-                    Text("35 отзывов")
+                    Text("\(Int.random(in: 3..<35)) отзывов")
                         .foregroundColor(.gray)
                         .font(.system(.caption2))
                 }
             }
             .offset(x: 16)
 
-            Text("Аналоги")
-                .font(.system(.headline))
-                .offset(x: 15, y: 16)
+            if !analogues.isEmpty {
+                Text("Аналоги")
+                    .font(.system(.headline))
+                    .offset(x: 15, y: 16)
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHGrid(rows: [.init(.fixed(269), spacing: 8)]) {
-                    ForEach(1..<10) { element in
-                        AnalogueView(
-                            imageUrl: jsonURL,
-                            badgeText: "Дешевле",
-                            drugName: "Мирамистин р-р для местн применения 0.01%, флакон с распи",
-                            price: "245 ₽"
-                        )
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHGrid(rows: [.init(.fixed(269), spacing: 8)]) {
+                        ForEach(analogues) { element in
+                            AnalogueView(
+                                imageUrl: element.imageUrl ?? jsonURL,
+                                badgeText: element.badge.analogueTitle,
+                                drugName: element.name,
+                                price: "245 ₽"
+                            )
+                        }
+                        .frame(width: 169)
                     }
-                    .frame(width: 169)
+                    .padding([.top, .bottom], 8)
+                    .padding(.leading, 16)
                 }
-                .padding([.top, .bottom], 8)
-                .padding(.leading, 16)
             }
+
             Spacer()
         }
     }
@@ -137,7 +149,7 @@ struct BadgeView: View {
 
 struct AnalogueView: View {
     let imageUrl: String
-    let badgeText: String
+    let badgeText: String?
     let drugName: String
     let starsFilled: Int = 4
     let price: String
@@ -153,12 +165,15 @@ struct AnalogueView: View {
                 ZStack(alignment: .topLeading) {
                     RemoteImage(url: imageUrl)
                         .aspectRatio(contentMode: .fit)
-                    BadgeView(
-                        text: badgeText,
-                        height: 24,
-                        padding: 16
-                    )
-                    .offset(y: 20)
+
+                    if badgeText != nil {
+                        BadgeView(
+                            text: badgeText!,
+                            height: 24,
+                            padding: 16
+                        )
+                        .offset(y: 20)
+                    }
                 }
 
                 VStack(alignment: .leading, spacing: 8) {
@@ -225,7 +240,15 @@ struct StarsView: View {
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView{
-            DetailView()
+            DetailView(
+                product: .init(
+                    id: 23,
+                    name: "Мелаксен, таблетки 3мг, 24 шт.",
+                    badge: .cheapest,
+                    imageUrl: nil,
+                    analogues: []
+                )
+            )
         }
     }
 }
