@@ -181,8 +181,12 @@ struct AnalogueView: View {
 
             VStack {
                 ZStack(alignment: .topLeading) {
-                    RemoteImage(url: imageUrl)
-                        .aspectRatio(contentMode: .fit)
+                    HStack {
+                        Spacer()
+                        RemoteImage(url: imageUrl)
+                            .aspectRatio(contentMode: .fit)
+                        Spacer()
+                    }
 
                     if badgeText != nil {
                         BadgeView(
