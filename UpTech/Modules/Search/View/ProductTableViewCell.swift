@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Nuke
 
 final class ProductTableViewCell: UITableViewCell, ReusableView {
     private lazy var productImageView: UIImageView = {
@@ -18,7 +19,7 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        label.font = UIFont.uptechFont(ofSize: 17, weight: .regular)
         label.textColor = UIColor(hex: "#343b40")
         label.numberOfLines = 0
         return label
@@ -26,7 +27,7 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
 
     private lazy var countryLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        label.font = UIFont.uptechFont(ofSize: 12, weight: .regular)
         label.textColor = .gray
         label.textColor = UIColor(hex: "#afb5b6")
         return label
@@ -35,7 +36,7 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
     private lazy var inStockLabel: UILabel = {
         let label = UILabel()
         label.text = "В наличии"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.font = UIFont.uptechFont(ofSize: 14, weight: .regular)
         label.textColor = UIColor(hex: "#76bbb0")
         return label
     }()
@@ -51,7 +52,7 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
         label.textAlignment = .center
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 14
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.uptechFont(ofSize: 14)
         label.backgroundColor = UIColor(hex: "#feedd8")
         label.textColor = UIColor(hex: "#d2a071")
         return label
@@ -74,6 +75,10 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+
     func setup(response: ProductResponse) {
         titleLabel.text = response.name
         countryLabel.text = response.country
@@ -89,6 +94,11 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
             analogueLabel.isHidden = count == 0
         }
 
+        if let path = response.imageURL, let url = URL(string: path) {
+            productImageView.load(url: url)
+        } else {
+            productImageView.image = UIImage(named: "test_icon")
+        }
     }
 
     private func setupLayout() {

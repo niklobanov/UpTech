@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class HomeViewController: UIViewController {
     private lazy var allergyView = CompilationView(type: .allergy)
@@ -35,7 +36,6 @@ final class HomeViewController: UIViewController {
         setupConstraints()
         self.view = view
     }
-
 
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in

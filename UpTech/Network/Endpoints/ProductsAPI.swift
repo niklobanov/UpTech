@@ -10,6 +10,7 @@ import Combine
 
 enum ProductsAPIService {
     case getProducts(queue: String)
+    case getProduct(id: String)
 }
 
 extension ProductsAPIService: APIService {
@@ -18,7 +19,12 @@ extension ProductsAPIService: APIService {
     }
 
     var path: String {
-        "/products/search/"
+        switch self {
+        case .getProduct(let id):
+            return "/products/\(id)/"
+        case .getProducts:
+            return "/products/search/"
+        }
     }
 
     var method: Method {
@@ -50,5 +56,9 @@ final class ProductsAPI {
         .subscribe(on: Scheduler.backgroundWorkScheduler)
         .receive(on: Scheduler.mainScheduler)
         .eraseToAnyPublisher()
+    }
+
+    func getProduct(id: String) -> AnyPublisher<ProductResponse, APIError> {
+        return self.productsAPI.call(endpoint: .getProduct(id: id))
     }
 }
