@@ -23,7 +23,7 @@ protocol ProductSearchViewModelProtocol {
 final class ProductsSearchViewModel: ProductSearchViewModelProtocol {
     private var cancellables = [AnyCancellable]()
     private var results = [ProductResponse]()
-    private let productsAPI = ProductsAPI.shard
+    private let productsAPI = ProductsAPI.shared
 
     func transform(input: ProductsSearchViewModelInput) -> ProductsSearchViewModelOuput {
         cancellables.forEach { $0.cancel() }
@@ -53,8 +53,12 @@ final class ProductsSearchViewModel: ProductSearchViewModelProtocol {
 
 
         let initialState: ProductsSearchViewModelOuput = .just(.idle)
-        let emptySearchString: ProductsSearchViewModelOuput = searchInput.filter({ $0.isEmpty }).map({ _ in .idle }).eraseToAnyPublisher()
-        let idle: ProductsSearchViewModelOuput = Publishers.Merge(initialState, emptySearchString).eraseToAnyPublisher()
+        let emptySearchString: ProductsSearchViewModelOuput = searchInput
+            .filter({ $0.isEmpty })
+            .map({ _ in .idle })
+            .eraseToAnyPublisher()
+        let idle: ProductsSearchViewModelOuput = Publishers.Merge(initialState, emptySearchString)
+            .eraseToAnyPublisher()
 
         return Publishers.Merge3(idle, movies, selectionProcessing)
             .removeDuplicates()

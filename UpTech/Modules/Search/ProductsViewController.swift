@@ -160,17 +160,8 @@ final class ProductsViewController: UIViewController {
 
     func open(_ productResponse: ProductResponse) {
         let detailView = DetailView(
-            product: .init(
-                id: productResponse.sberProductId ?? 0,
-                name: productResponse.name ?? "",
-                badge: .init(
-                    isEffective: productResponse.isEffective ?? false,
-                    isCheapest: productResponse.isCheapest ?? false,
-                    isSafe: productResponse.isTrustworthy ?? false
-                ),
-                imageUrl: productResponse.imageURL,
-                analogues: productResponse.analogueIDs ?? []
-            )
+            product: Product(productResponse: productResponse),
+            analogues: productResponse.analogues?.map(Product.init) ?? []
         )
         let vc = UIHostingController(rootView: detailView)
         navigationController?.pushViewController(vc, animated: true)

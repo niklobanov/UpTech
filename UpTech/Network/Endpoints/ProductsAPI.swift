@@ -46,7 +46,7 @@ extension ProductsAPIService: APIService {
 }
 
 final class ProductsAPI {
-    static let shard = ProductsAPI()
+    static let shared = ProductsAPI()
     private let productsAPI = API<ProductsAPIService>()
 
     func getProducts(queue: String) -> AnyPublisher<Result<ListResponse<ProductResponse>, APIError>, Never> {
