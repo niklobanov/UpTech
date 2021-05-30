@@ -127,7 +127,7 @@ final class ProductTableViewCell: UITableViewCell, ReusableView {
 
         let badge = ProductBadge(isEffective: effective, isCheapest: cheap, isSafe: safe)
         bageButton.isHidden = badge == .none
-        bageButton.setTitle(badge.analogueTitle, for: .normal)
+        bageButton.setTitle(badge.directTitle, for: .normal)
     }
 
     private func setupLayout() {

@@ -12,7 +12,7 @@ final class CompilationView: UIView {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.uptechFont(ofSize: 12)
+        label.font = UIFont.uptechFont(ofSize: 16)
         label.numberOfLines = 0
         label.textColor = .black
         return label
@@ -36,6 +36,12 @@ final class CompilationView: UIView {
     }()
 
     private let tapAction: (() -> Void)?
+
+    private var blockWidth: CGFloat {
+        let screenWidth = UIScreen.main.bounds.width
+        let insets: CGFloat = 14 * 2 + 6
+        return (screenWidth - insets) / 2
+    }
 
     init(type: Compilation, tapAction: (() -> Void)? = nil) {
         self.tapAction = tapAction
@@ -73,13 +79,21 @@ final class CompilationView: UIView {
 
         imageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview().inset(isHighlightedBorder ? 3 : 0)
-            make.height.equalTo(self.snp.height).multipliedBy(0.8)
+            make.height.equalTo(self.snp.height).multipliedBy(0.7)
         }
         
 
         titleLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(imageView.snp.bottom).offset(17)
+            var titleOffset = (blockWidth * 0.3) / 2
+            if isHighlightedBorder {
+                titleOffset -= 3
+            }
+            make.centerY.equalTo(imageView.snp.bottom).offset(titleOffset)
             make.leading.trailing.equalToSuperview().inset(16)
+        }
+
+        self.snp.makeConstraints { make in
+            make.width.height.equalTo(blockWidth)
         }
     }
 

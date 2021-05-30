@@ -19,15 +19,9 @@ final class HomeViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Подборки"
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.font = UIFont.uptechFont(ofSize: 22, weight: .bold)
         return label
     }()
-
-    private var blockWidth: CGFloat {
-        let screenWidth = UIScreen.main.bounds.width
-        let insets: CGFloat = 14 * 2 + 6
-        return (screenWidth - insets) / 2
-    }
 
     override func loadView() {
         let view = UIView()
@@ -44,25 +38,21 @@ final class HomeViewController: UIViewController {
 
         allergyView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.width.height.equalTo(blockWidth)
             make.leading.equalToSuperview().inset(14)
         }
 
         covidView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.width.height.equalTo(blockWidth)
             make.trailing.equalToSuperview().inset(14)
         }
 
         diabetesView.snp.makeConstraints { make in
             make.top.equalTo(allergyView.snp.bottom).offset(6)
-            make.width.height.equalTo(blockWidth)
             make.leading.equalToSuperview().inset(14)
         }
 
         efficiencyView.snp.makeConstraints { make in
             make.top.equalTo(allergyView.snp.bottom).offset(6)
-            make.width.height.equalTo(blockWidth)
             make.trailing.equalToSuperview().inset(14)
         }
     }

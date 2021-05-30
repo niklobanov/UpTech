@@ -43,7 +43,7 @@ final class ProductsViewController: UIViewController {
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.tintColor = .red
+        searchController.searchBar.tintColor = UIColor(hex: "#d2a071")
         searchController.searchBar.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
         return searchController
@@ -57,15 +57,6 @@ final class ProductsViewController: UIViewController {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Not supported!")
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.removeBackTitle()
     }
 
     override func loadView() {
@@ -98,9 +89,23 @@ final class ProductsViewController: UIViewController {
         searchController.isActive = true
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigation()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         appear.send(())
+    }
+
+    private func setupNavigation() {
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.removeBackTitle()
+        navigationController?.navigationBar.tintColor = UIColor(hex: "#d2a071")
     }
 
     private func bind(to viewModel: ProductSearchViewModelProtocol) {
