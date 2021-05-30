@@ -31,6 +31,7 @@ struct ProductResponse: Codable, Hashable {
     let isCheapest: Bool?
     let isTrustworthy: Bool?
     let imageURL: String?
+    let analogues: [ProductResponse]?
 
     enum CodingKeys: String, CodingKey {
         case sberProductId = "sber_product_id"
@@ -56,5 +57,6 @@ struct ProductResponse: Codable, Hashable {
         case isTrustworthy = "is_trustworthy"
         case detailPageURL = "detail_page_url"
         case imageURL = "image_url"
+        case analogues
     }
 }
